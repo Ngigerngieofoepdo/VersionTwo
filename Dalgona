@@ -1,0 +1,27 @@
+ local yes =  Instance.new("BoolValue")
+ yes:GetPropertyChangedSignal("Value"):Connect(function()
+   if yes.Value == true then
+       for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
+        v.Parent = game.Players.LocalPlayer.Character
+   end
+   wait(0.5)
+   for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+   if v:IsA("Tool") then
+       v.Parent = game.Players.LocalPlayer.Backpack
+   end
+end
+   end
+end)
+ 
+  local Hook; -- Store the old hook to return vital functions later
+Hook = hookfunction(getrawmetatable(game).__namecall, newcclosure(function(self, ...) -- Hook Namecall
+  local args = {...} -- store argument
+  if getnamecallmethod() == "InvokeServer" and self.Name == "PickupTool"   then
+     yes.Value = true
+     yes.Value = false
+  end
+  return Hook(self, ...) -- Return the old hook to prevent breaking your entire game
+end))
+
+end
+)
